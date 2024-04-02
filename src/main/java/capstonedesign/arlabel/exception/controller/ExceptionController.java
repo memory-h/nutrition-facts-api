@@ -17,7 +17,7 @@ public class ExceptionController {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handlerNoSuchDBException(NoSuchDBException e) {
-        log.info("[ExceptionHandler] NoSuchDBException", e);
+        log.warn("[ExceptionHandler] NoSuchDBException", e);
 
         return "제품명을 다시 입력하세요.";
     }

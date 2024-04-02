@@ -1,5 +1,8 @@
 package capstonedesign.arlabel.controller;
 
+import capstonedesign.arlabel.repository.InquiryAboutProductInfo;
+import capstonedesign.arlabel.repository.ProductRepository;
+import capstonedesign.arlabel.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,18 @@ class ProductControllerTest {
 
     @Autowired
     MockMvc mockMvc;
+
+    @Autowired
+    ProductController productController;
+
+    @Autowired
+    ProductService productService;
+
+    @Autowired
+    ProductRepository productRepository;
+
+    @Autowired
+    InquiryAboutProductInfo inquiryAboutProductInfo;
 
     @Test
     void 제품명으로_영양정보_및_무기물질함량_정보_조회() throws Exception {
@@ -56,6 +71,15 @@ class ProductControllerTest {
                         "\"proteins\":\"0g\"}", true) // strict = true : 응답이 정확한 순서와 정확한 필드를 포함하고 있는지 검증
                 )
                 .andDo(print()); // 요청, 응답 메시지 확인
+    }
+
+    @Test
+    void AOP_적용_확인() {
+        // Controller, Service, Repository, InquiryAboutProductInfo AOP 적용 확인
+        log.info("[Controller] AOP = {}", productController.getClass());
+        log.info("[Service] AOP = {}", productService.getClass());
+        log.info("[Repository] AOP = {}", productRepository.getClass());
+        log.info("[InquiryAboutProductInfo] AOP = {}", inquiryAboutProductInfo.getClass());
     }
 
 }

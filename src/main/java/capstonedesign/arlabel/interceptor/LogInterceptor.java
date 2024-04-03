@@ -8,6 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -17,14 +20,19 @@ public class LogInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        // 요청자의 IP 주소와 User-Agent 정보를 가져온다.
+        // 클라이언트의 IP 주소, User-Agent, URL 정보를 가져온다.
         String ipAddress = request.getRemoteAddr();
         String userAgent = request.getHeader("User-Agent");
-        String requestUrl = request.getRequestURL().toString(); // 요청된 전체 URL
+        String requestUrl = URLDecoder.decode(request.getRequestURL().toString(), StandardCharsets.UTF_8);
+
+        // 쿼리 파라미터가 있는 경우
+        if (request.getQueryString() != null) {
+            requestUrl += "?" + URLDecoder.decode(request.getQueryString(), StandardCharsets.UTF_8);
+        }
 
         // 크롤러가 모든 페이지에 접근하는 것을 차단
         if (request.getRequestURI().equals("/robots.txt")) {
-            log.warn("[URL] : {}, [User IP] : {}, [User-Agent] : {}", requestUrl, ipAddress, userAgent);
+            log.warn("[URL]: {}, [User IP]: {}, [User-Agent]: {}", requestUrl, ipAddress, userAgent);
 
             return true;
         }
@@ -35,7 +43,7 @@ public class LogInterceptor implements HandlerInterceptor {
          */
         else if (!request.getRequestURI().equals("/arlabel") || request.getParameter("product-name") == null) {
 
-            log.warn("[잘못된 요청] [URL] : {}, [User IP] : {}, [User-Agent] : {}", requestUrl, ipAddress, userAgent);
+            log.warn("[잘못된 요청] [URL]: {}, [User IP]: {}, [User-Agent]: {}", requestUrl, ipAddress, userAgent);
 
             // HTTP Status Code 404
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -45,7 +53,7 @@ public class LogInterceptor implements HandlerInterceptor {
         }
 
         // 사용자 IP와 User-Agent를 포함하여 로그 메시지를 생성하고 추적 시작
-        logTrace.requestInfo(ipAddress, userAgent);
+        logTrace.requestInfo(requestUrl, ipAddress, userAgent);
 
         return true;
     }

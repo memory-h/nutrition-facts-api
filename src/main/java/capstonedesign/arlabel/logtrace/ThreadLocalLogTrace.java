@@ -11,16 +11,16 @@ public class ThreadLocalLogTrace implements LogTrace {
     private static final String EX_PREFIX = "<X-- ";
 
     // ThreadLocal을 사용하여 각 스레드에 고유한 TraceId를 저장한다. (동시성 문제 해결)
-    private ThreadLocal<TraceId> traceIdHolder = new ThreadLocal<>();
+    private final ThreadLocal<TraceId> traceIdHolder = new ThreadLocal<>();
 
-    // 클라이언트의 요청 정보(IP, User-Agent)를 포함하는 로그를 출력하는 메서드
+    // 클라이언트의 요청 정보(URL, IP, User-Agent)를 포함하는 로그를 출력하는 메서드
     @Override
-    public void requestInfo(String ipAddress, String userAgent) {
+    public void requestInfo(String requestUrl, String ipAddress, String userAgent) {
         syncTraceId(); // 현재 스레드에 대한 TraceId를 업데이트하거나 초기화한다.
 
         TraceId traceId = traceIdHolder.get();
 
-        log.info("[{}] User IP: [{}], User-Agent: [{}]", traceId.getId(), ipAddress, userAgent);
+        log.info("[{}] [URL]: {} User IP: [{}], User-Agent: [{}]", traceId.getId(), requestUrl, ipAddress, userAgent);
     }
 
     // 시작 로그를 출력하는 메서드

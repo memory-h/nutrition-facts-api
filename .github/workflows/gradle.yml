@@ -54,11 +54,11 @@ jobs:
           EC2_USER: ${{ secrets.EC2_USER }}
           EC2_HOST: ${{ secrets.EC2_HOST }}
         run: |
-          echo "$EC2_SSH_KEY" > ec2_key.pem
-          chmod 400 ec2_key.pem
-          scp -o StrictHostKeyChecking=no -i ec2_key.pem ./build/libs/arlabel-0.0.1-SNAPSHOT.jar $EC2_USER@$EC2_HOST:/opt/webapp
-          ssh -o StrictHostKeyChecking=no -i ec2_key.pem $EC2_USER@$EC2_HOST << EOF
+          eval $(ssh-agent -s)
+          echo "${{ secrets.EC2_SSH_KEY }}" | tr -d '\r' | ssh-add -
+          scp -o StrictHostKeyChecking=accept-new -i $SSH_AUTH_SOCK ./build/libs/arlabel-0.0.1-SNAPSHOT.jar $EC2_USER@$EC2_HOST:/opt/webapp
+          ssh -o StrictHostKeyChecking=accept-new -i $SSH_AUTH_SOCK $EC2_USER@$EC2_HOST << EOF
           sudo systemctl stop arlabel.service
           sudo systemctl start arlabel.service
           EOF
-          rm -f ec2_key.pem
+          ssh-agent -k

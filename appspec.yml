@@ -1,0 +1,17 @@
+version: 0.0 # appspec 파일의 버전을 명시
+os: linux # 대상 운영 체제를 명시
+
+files: # CodeDeploy가 소스의 위치에서 대상의 위치로 파일을 복사하는 방법을 정의
+  - source: / # 'source'는 복사할 파일이나 디렉토리의 소스 위치를 지정
+    destination: /opt/webapp/ # 'destination'은 파일을 복사할 대상 위치
+
+permissions: # 대상 디렉토리에 설정할 파일 권한을 정의
+  - object: /opt/webapp/
+    owner: ubuntu
+    group: ubuntu
+
+hooks: # 배포 생명 주기 훅을 정의한다. 즉, 배포 중 특정 단계에서 실행될 스크립트를 지정
+  AfterInstall: # 설치 후 단계에 해당하는 훅
+    - location: scripts/deploy.sh # 실행할 스크립트 파일의 위치를 지정
+      timeout: 60 # 스크립트가 완료되기를 기다리는 최대 시간(초)을 지정
+      runas: ubuntu # 스크립트를 실행할 사용자를 지정

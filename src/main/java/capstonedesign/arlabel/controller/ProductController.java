@@ -25,9 +25,9 @@ public class ProductController {
     }
 
     // 로드밸런서가 health check를 진행하는 경로
-    @GetMapping("/health")
+    @GetMapping("/server/health")
     public String health() {
-        return "ok";
+        return "OK";
     }
 
 }

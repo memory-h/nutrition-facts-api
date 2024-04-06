@@ -30,8 +30,15 @@ public class LogInterceptor implements HandlerInterceptor {
             requestUrl += "?" + URLDecoder.decode(request.getQueryString(), StandardCharsets.UTF_8);
         }
 
+        // 로드밸런서가 health check를 진행하는 경로
+        if (request.getRequestURI().equals("/health")) {
+            log.info("[URL]: {}, [User IP]: {}, [User-Agent]: {}", requestUrl, ipAddress, userAgent);
+
+            return true;
+        }
+
         // 크롤러가 모든 페이지에 접근하는 것을 차단
-        if (request.getRequestURI().equals("/robots.txt")) {
+        else if (request.getRequestURI().equals("/robots.txt")) {
             log.warn("[URL]: {}, [User IP]: {}, [User-Agent]: {}", requestUrl, ipAddress, userAgent);
 
             return true;

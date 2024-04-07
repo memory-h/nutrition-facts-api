@@ -20,8 +20,14 @@ public class LogInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        // 클라이언트의 IP 주소, User-Agent, URL 정보를 가져온다.
-        String ipAddress = request.getRemoteAddr();
+        // "X-Forwarded-For" 헤더에서 클라이언트의 실제 IP 주소를 가져온다.
+        String xForwardedForHeader = request.getHeader("X-Forwarded-For");
+
+        /*
+         * "X-Forwarded-For" 헤더가 존재하면, 이 헤더에서 첫 번째 IP 주소(클라이언트의 원본 IP)를 사용한다.
+         * 만약 헤더가 없다면, HttpServletRequest의 getRemoteAddr() 메소드를 통해 IP 주소를 가져온다. (로드 밸런서의 IP 주소)
+         */
+        String ipAddress = xForwardedForHeader != null ? xForwardedForHeader.split(",")[0] : request.getRemoteAddr();
         String userAgent = request.getHeader("User-Agent");
         String requestUrl = URLDecoder.decode(request.getRequestURL().toString(), StandardCharsets.UTF_8);
 

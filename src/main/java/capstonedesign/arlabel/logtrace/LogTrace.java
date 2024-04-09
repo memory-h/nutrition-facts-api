@@ -11,6 +11,9 @@ public interface LogTrace {
     // 종료 로그를 출력하는 메서드
     void end(TraceStatus status);
 
+    // 스레드 로컬 값 제거
+    void remove();
+
     // 예외 발생 시 로그를 출력하는 메서드
     void exception(TraceStatus status, Exception e);
 

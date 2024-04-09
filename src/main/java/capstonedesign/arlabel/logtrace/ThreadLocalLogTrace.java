@@ -20,7 +20,7 @@ public class ThreadLocalLogTrace implements LogTrace {
 
         TraceId traceId = traceIdHolder.get();
 
-        log.info("[{}] [URL]: {} User IP: [{}], User-Agent: [{}]", traceId.getId(), requestUrl, ipAddress, userAgent);
+        log.info("[{}] [URL]: {}, [User IP]: {}, [User-Agent]: {}", traceId.getId(), requestUrl, ipAddress, userAgent);
     }
 
     // 시작 로그를 출력하는 메서드
@@ -50,6 +50,11 @@ public class ThreadLocalLogTrace implements LogTrace {
         complete(status, e);
     }
 
+    // 스레드 로컬 값 제거
+    public void remove() {
+        traceIdHolder.remove();
+    }
+
     private void complete(TraceStatus status, Exception e) {
         long endTime = System.currentTimeMillis(); // 작업의 종료 시간을 저장한다.
         long resultTime = endTime - status.getStartTimeMs(); // 작업의 총 수행 시간을 계산한다.
@@ -68,11 +73,7 @@ public class ThreadLocalLogTrace implements LogTrace {
     private void releaseTraceId() {
         TraceId traceId = traceIdHolder.get();
 
-        if (traceId.isFirstLevel()) { // 트랜잭션 ID가 첫 번째 레벨이면 스레드 로컬 값 제거
-            traceIdHolder.remove();
-        } else { // 아니면 createPreviousId() 메서드를 호출
-            traceIdHolder.set(traceId.createPreviousId());
-        }
+        traceIdHolder.set(traceId.createPreviousId());
     }
 
     // TraceId 동기화

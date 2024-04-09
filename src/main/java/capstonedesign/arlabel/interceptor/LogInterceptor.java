@@ -38,7 +38,7 @@ public class LogInterceptor implements HandlerInterceptor {
 
         // 로드밸런서가 health check를 진행하는 경로
         if (request.getRequestURI().equals("/server/health")) {
-            log.info("[URL]: {}, [User IP]: {}, [User-Agent]: {}", requestUrl, ipAddress, userAgent);
+            logTrace.requestInfo(requestUrl, ipAddress, userAgent);
 
             return true;
         }
@@ -69,6 +69,11 @@ public class LogInterceptor implements HandlerInterceptor {
         logTrace.requestInfo(requestUrl, ipAddress, userAgent);
 
         return true;
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+        logTrace.remove();
     }
 
 }

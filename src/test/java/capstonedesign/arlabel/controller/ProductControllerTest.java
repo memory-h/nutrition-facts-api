@@ -50,7 +50,26 @@ class ProductControllerTest {
                         "\"potassium\":\"1.5~3.4\"," +
                         "\"natrium\":\"4.0~7.2\"," +
                         "\"magnesium\":\"1.7~3.5\"," +
-                        "\"fluorine\":\"불검출\"}", true) // strict = true : 응답이 정확한 순서와 정확한 필드를 포함하고 있는지 검증
+                        "\"fluorine\":\"불검출\"," +
+                        "\"catchmentArea\":\"제주특별자치도 제주시 조천읍 남조로 1717-3, 제주특별자치도개발공사\"}",
+                        true) // strict = true : 응답이 정확한 순서와 정확한 필드를 포함하고 있는지 검증
+                )
+                .andDo(print()); // 요청, 응답 메시지 확인
+
+        mockMvc.perform(get("/arlabel")
+                        .param("product-name", "스파클(500ml)")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("{" +
+                                "\"productName\":\"스파클(500ml)\"," +
+                                "\"calcium\":\"20.6~63.2\"," +
+                                "\"potassium\":\"5.7~14.8\"," +
+                                "\"natrium\":\"0.7~2.7\"," +
+                                "\"magnesium\":\"3.7~13.8\"," +
+                                "\"fluorine\":\"0.0~1.1\"," +
+                                "\"catchmentArea\":\"충청남도 천안시 동남구 성남면 대정1길 19-11, 주식회사 대정\"}",
+                        true) // strict = true : 응답이 정확한 순서와 정확한 필드를 포함하고 있는지 검증
                 )
                 .andDo(print()); // 요청, 응답 메시지 확인
 

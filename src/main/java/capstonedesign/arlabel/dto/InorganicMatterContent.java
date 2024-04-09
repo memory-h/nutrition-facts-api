@@ -22,4 +22,6 @@ public class InorganicMatterContent {
 
     private String fluorine; // 불소
 
+    private String catchmentArea; // 수원지
+
 }

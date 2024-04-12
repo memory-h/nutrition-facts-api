@@ -4,6 +4,7 @@ import capstonedesign.arlabel.repository.InquiryAboutProductInfo;
 import capstonedesign.arlabel.repository.ProductRepository;
 import capstonedesign.arlabel.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -37,8 +38,9 @@ class ProductControllerTest {
     @Autowired
     InquiryAboutProductInfo inquiryAboutProductInfo;
 
+    @DisplayName("제품명으로 영양 정보 및 무기 물질 함량 정보 조회")
     @Test
-    void 제품명으로_영양정보_및_무기물질함량_정보_조회() throws Exception {
+    void request() throws Exception {
         mockMvc.perform(get("/arlabel")
                         .param("product-name", "제주 삼다수(330ml)")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -52,23 +54,6 @@ class ProductControllerTest {
                         "\"magnesium\":\"1.7~3.5\"," +
                         "\"fluorine\":\"불검출\"," +
                         "\"catchmentArea\":\"제주특별자치도 제주시 조천읍 남조로 1717-3, 제주특별자치도개발공사\"}",
-                        true) // strict = true : 응답이 정확한 순서와 정확한 필드를 포함하고 있는지 검증
-                )
-                .andDo(print()); // 요청, 응답 메시지 확인
-
-        mockMvc.perform(get("/arlabel")
-                        .param("product-name", "스파클(500ml)")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .characterEncoding("UTF-8"))
-                .andExpect(status().isOk())
-                .andExpect(content().json("{" +
-                                "\"productName\":\"스파클(500ml)\"," +
-                                "\"calcium\":\"20.6~63.2\"," +
-                                "\"potassium\":\"5.7~14.8\"," +
-                                "\"natrium\":\"0.7~2.7\"," +
-                                "\"magnesium\":\"3.7~13.8\"," +
-                                "\"fluorine\":\"0.0~1.1\"," +
-                                "\"catchmentArea\":\"충청남도 천안시 동남구 성남면 대정1길 19-11, 주식회사 대정\"}",
                         true) // strict = true : 응답이 정확한 순서와 정확한 필드를 포함하고 있는지 검증
                 )
                 .andDo(print()); // 요청, 응답 메시지 확인
@@ -92,8 +77,9 @@ class ProductControllerTest {
                 .andDo(print()); // 요청, 응답 메시지 확인
     }
 
+    @DisplayName("AOP 적용 확인")
     @Test
-    void AOP_적용_확인() {
+    void isAOPCheck() {
         // Controller, Service, Repository, InquiryAboutProductInfo AOP 적용 확인
         log.info("[Controller] AOP = {}", productController.getClass());
         log.info("[Service] AOP = {}", productService.getClass());

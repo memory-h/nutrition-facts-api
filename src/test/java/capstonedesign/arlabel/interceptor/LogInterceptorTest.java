@@ -1,5 +1,6 @@
 package capstonedesign.arlabel.interceptor;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,15 +18,17 @@ class LogInterceptorTest {
     @Autowired
     MockMvc mockMvc;
 
+    @DisplayName("경로가 /arlabel로 시작하지 않는 경우")
     @Test
-    void 스프링_인터셉터_경로가_arlabel로_시작하지_않는_경우() throws Exception {
+    void pathDoesNotStartWithArlabel() throws Exception {
         mockMvc.perform(get("/test")
                         .characterEncoding("UTF-8"))
                 .andExpect(status().isNotFound());
     }
 
+    @DisplayName("쿼리 파라미터가 잘못된 경우")
     @Test
-    void 스프링_인터셉터_쿼리_파라미터_없는_경우() throws Exception {
+    void queryParameterIsIncorrect() throws Exception {
         mockMvc.perform(get("/arlabel")
                         .param("product", "제주 삼다수(330ml)")
                         .characterEncoding("UTF-8"))

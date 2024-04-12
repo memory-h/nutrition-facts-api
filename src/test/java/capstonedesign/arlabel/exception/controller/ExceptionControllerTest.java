@@ -3,6 +3,7 @@ package capstonedesign.arlabel.exception.controller;
 import capstonedesign.arlabel.exception.NoSuchDBException;
 import capstonedesign.arlabel.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -29,8 +30,9 @@ class ExceptionControllerTest {
     @Autowired
     ProductService productService;
 
+    @DisplayName("데이터베이스에 저장되지 않은 제품명을 조회한 경우")
     @Test
-    void 데이터베이스에_저장되지_않은_제품명을_조회한_경우() throws Exception {
+    void queryForNonexistentProductNameInDatabase() throws Exception {
         mockMvc.perform(get("/arlabel")
                         .param("product-name", "콜라(335m)")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -40,8 +42,9 @@ class ExceptionControllerTest {
                 .andDo(print());
     }
 
+    @DisplayName("데이터베이스에 저장되지 않은 제품명을 조회한 경우 예외처리")
     @Test
-    void 데이터베이스에_저장되지_않은_제품명을_조회한_경우_예외처리() {
+    void exceptionHandlingForNonexistentProductNameQuery() {
         // 데이터베이스에 저장되지 않은 제품명으로 findByProductInfo() 메서드를 호출했을 때 발생하는 예외를 캡처한다.
         Throwable thrown = catchThrowable(() -> productService.findByProductInfo("환타(300ml)"));
 

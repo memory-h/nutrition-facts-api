@@ -36,6 +36,10 @@ jobs:
         run: ./gradlew build
         shell: bash
 
+      - name: Make Zip File # 빌드 결과물을 ZIP 파일로 압축: 해당 파일은 배포에 사용
+        run: zip -qq -r ./$GITHUB_SHA.zip .
+        shell: bash
+
       - name: Test Project # 프로젝트의 테스트를 실행: 단위 테스트 및 기타 테스트가 수행
         run: ./gradlew test
         shell: bash
@@ -46,10 +50,6 @@ jobs:
     runs-on: ubuntu-latest # 작업이 실행될 Ubuntu 가상 환경을 정의
     steps:
       - uses: actions/checkout@v3 # 코드 리포지토리를 체크아웃하여 작업 공간에 복사
-
-      - name: Make Zip File # 빌드 결과물을 ZIP 파일로 압축: 해당 파일은 배포에 사용
-        run: zip -qq -r ./$GITHUB_SHA.zip .
-        shell: bash
 
       - name: Configure AWS credentials # AWS CLI를 사용하기 위해 필요한 자격 증명을 설정
         uses: aws-actions/configure-aws-credentials@v1

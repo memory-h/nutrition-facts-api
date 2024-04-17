@@ -15,9 +15,9 @@ env:
   SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
   SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
 
-# 'build-and-test' 작업을 정의: 애플리케이션의 빌드 및 테스트를 수행
+# 'build-and-deploy' 작업을 정의: 애플리케이션의 빌드와 테스트, 배포를 수행
 jobs:
-  build-and-test:
+  build-and-deploy:
     runs-on: ubuntu-latest # 작업이 실행될 Ubuntu 가상 환경을 정의
     steps:
       - uses: actions/checkout@v3 # 코드 리포지토리를 체크아웃하여 작업 공간에 복사
@@ -43,13 +43,6 @@ jobs:
       - name: Test Project # 프로젝트의 테스트를 실행: 단위 테스트 및 기타 테스트가 수행
         run: ./gradlew test
         shell: bash
-
-  # 'deploy' 작업은 빌드 및 테스트 작업이 성공한 후에 실행: 빌드된 아티팩트를 AWS로 배포
-  deploy:
-    needs: build-and-test # 'build-and-test' 작업이 성공적으로 완료되어야 실행
-    runs-on: ubuntu-latest # 작업이 실행될 Ubuntu 가상 환경을 정의
-    steps:
-      - uses: actions/checkout@v3 # 코드 리포지토리를 체크아웃하여 작업 공간에 복사
 
       - name: Configure AWS credentials # AWS CLI를 사용하기 위해 필요한 자격 증명을 설정
         uses: aws-actions/configure-aws-credentials@v1

@@ -3,10 +3,10 @@ os: linux # 대상 운영 체제를 명시
 
 files: # CodeDeploy가 소스의 위치에서 대상의 위치로 파일을 복사하는 방법을 정의
   - source: / # 'source'는 복사할 파일이나 디렉토리의 소스 위치를 지정
-    destination: /opt/webapp # 'destination'은 파일을 복사할 대상 위치
+    destination: /home/ubuntu/app # 'destination'은 파일을 복사할 대상 위치
 
 permissions: # 대상 디렉토리에 설정할 파일 권한을 정의
-  - object: /opt/webapp/
+  - object: /home/ubuntu/app/
     owner: ubuntu
     group: ubuntu
 

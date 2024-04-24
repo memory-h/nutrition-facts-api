@@ -23,10 +23,10 @@
                 <fileNamePattern>/var/log/arlabel/spring-boot-logger-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 
                 <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                    <maxFileSize>10MB</maxFileSize>
+                    <maxFileSize>5MB</maxFileSize>
                 </timeBasedFileNamingAndTriggeringPolicy>
-                <!-- 일자별 로그파일 최대 보관주기(~일), 해당 설정일 이상된 파일은 자동으로 제거-->
-                <maxHistory>90</maxHistory>
+                <!-- 일자별 로그파일 최대 보관 주기(~일), 해당 설정일 이상된 파일은 자동으로 제거-->
+                <maxHistory>10</maxHistory>
             </rollingPolicy>
         </appender>
 

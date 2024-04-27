@@ -6,7 +6,7 @@
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
 
     <!-- 개발 및 테스트 환경의 콘솔 로그 설정 -->
-    <springProfile name="local">
+    <springProfile name="dev">
         <root level="DEBUG">
             <appender-ref ref="CONSOLE" />
         </root>

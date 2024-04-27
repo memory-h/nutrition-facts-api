@@ -7,11 +7,18 @@
 
     <!-- 개발 및 테스트 환경의 콘솔 로그 설정 -->
     <springProfile name="local">
-        <root level="INFO">
+        <root level="DEBUG">
             <appender-ref ref="CONSOLE" />
         </root>
     </springProfile>
 
+    <springProfile name="test">
+        <root level="DEBUG">
+            <appender-ref ref="CONSOLE" />
+        </root>
+    </springProfile>
+
+    <!-- 프로적션 환경의 콘솔 및 파일 로그 설정 -->
     <springProfile name="prod">
         <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <encoder>

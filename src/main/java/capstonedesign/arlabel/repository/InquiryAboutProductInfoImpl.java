@@ -21,7 +21,7 @@ public class InquiryAboutProductInfoImpl implements InquiryAboutProductInfo {
     // 무기 물질 함량 정보를 조회하는 메서드
     @Override
     public InorganicMatterContent getInorganicMatterContentByProductName(String productName) {
-        String sql = "SELECT * FROM InorganicMatter WHERE product_name = ?";
+        String sql = "SELECT * FROM inorganic_matter WHERE product_name = ?";
 
         // queryForObject(): 단건을 조회할 때 사용하는 메서드 (쿼리문 실행 결과로 1개만 나오는 경우)
         return template.queryForObject(sql, InorganicMatterContentRowMapper(), productName);
@@ -30,7 +30,7 @@ public class InquiryAboutProductInfoImpl implements InquiryAboutProductInfo {
     // 제품 영양 정보를 조회하는 메서드
     @Override
     public NutritionInfo getNutritionInfoByProductName(String productName) {
-        String sql = "SELECT * FROM Nutrition WHERE product_name = ?";
+        String sql = "SELECT * FROM nutrition WHERE product_name = ?";
 
         return template.queryForObject(sql, nutritionInfoRowMapper(), productName);
     }

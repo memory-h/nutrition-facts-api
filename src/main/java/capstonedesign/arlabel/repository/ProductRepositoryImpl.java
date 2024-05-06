@@ -20,7 +20,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     // 제품 이름을 기반으로 해당 제품이 물인지 아닌지 판단하는 메서드
     @Override
     public boolean isProductWater(String productName) {
-        String sql = "SELECT is_water FROM ProductType WHERE product_name = ?";
+        String sql = "SELECT is_water FROM product_type WHERE product_name = ?";
 
         try {
             // SQL 쿼리 실행: 제품명을 사용하여 is_water 값을 조회하고 Boolean으로 반환

@@ -16,7 +16,7 @@ public class InorganicMatterContent {
 
     private String potassium; // 칼륨
 
-    private String natrium; // 나트륨
+    private String sodium; // 나트륨
 
     private String magnesium; // 마그네슘
 

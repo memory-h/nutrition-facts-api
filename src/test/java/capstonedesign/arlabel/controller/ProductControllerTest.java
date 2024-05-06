@@ -52,7 +52,7 @@ class ProductControllerTest {
                         "\"productName\":\"제주 삼다수(330ml)\"," +
                         "\"calcium\":\"2.5~4.0\"," +
                         "\"potassium\":\"1.5~3.4\"," +
-                        "\"natrium\":\"4.0~7.2\"," +
+                        "\"sodium\":\"4.0~7.2\"," +
                         "\"magnesium\":\"1.7~3.5\"," +
                         "\"fluorine\":\"불검출\"," +
                         "\"catchmentArea\":\"제주특별자치도 제주시 조천읍 남조로 1717-3, 제주특별자치도개발공사\"}",

@@ -39,8 +39,11 @@ class ExceptionControllerTest {
                         .param("product-name", "콜라(335m)")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8"))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string("제품명을 다시 입력하세요."))
+                .andExpect(status().isOk())
+                .andExpect(status().isOk())
+                .andExpect(content().json("{\"message\":\"등록되지 않은 제품명입니다.\"}",
+                        true)
+                )
                 .andDo(print());
     }
 

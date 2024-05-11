@@ -51,10 +51,10 @@ public class LogInterceptor implements HandlerInterceptor {
         }
 
         /*
-         * 요청 URL이 "/arlabel"이 아니거나, "/arlabel"이지만 "product-name" 파라미터가 없는 경우,
+         * 요청 URL이 "/api"이 아니거나, "/api"이지만 "product-name" 파라미터가 없는 경우,
          * 사용자의 IP와 User-Agent와 함께 로그를 남기고 HTTP Status Code 404를 반환
          */
-        else if (!request.getRequestURI().equals("/arlabel") || request.getParameter("product-name") == null) {
+        else if (!request.getRequestURI().equals("/api") || request.getParameter("product-name") == null) {
 
             log.warn("[잘못된 요청] [URL]: {}, [User IP]: {}, [User-Agent]: {}", requestUrl, ipAddress, userAgent);
 

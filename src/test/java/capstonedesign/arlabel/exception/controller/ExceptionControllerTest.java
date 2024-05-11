@@ -35,7 +35,7 @@ class ExceptionControllerTest {
     @DisplayName("데이터베이스에 저장되지 않은 제품명을 조회한 경우")
     @Test
     void queryForNonexistentProductNameInDatabase() throws Exception {
-        mockMvc.perform(get("/arlabel")
+        mockMvc.perform(get("/api")
                         .param("product-name", "콜라(335m)")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8"))

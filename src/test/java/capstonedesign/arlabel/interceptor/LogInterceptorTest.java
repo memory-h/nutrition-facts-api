@@ -20,7 +20,7 @@ class LogInterceptorTest {
     @Autowired
     MockMvc mockMvc;
 
-    @DisplayName("경로가 /arlabel로 시작하지 않는 경우")
+    @DisplayName("경로가 /api로 시작하지 않는 경우")
     @Test
     void pathDoesNotStartWithArlabel() throws Exception {
         mockMvc.perform(get("/test")
@@ -31,7 +31,7 @@ class LogInterceptorTest {
     @DisplayName("쿼리 파라미터가 잘못된 경우")
     @Test
     void queryParameterIsIncorrect() throws Exception {
-        mockMvc.perform(get("/arlabel")
+        mockMvc.perform(get("/api")
                         .param("product", "제주 삼다수(330ml)")
                         .characterEncoding("UTF-8"))
                 .andExpect(status().isNotFound());

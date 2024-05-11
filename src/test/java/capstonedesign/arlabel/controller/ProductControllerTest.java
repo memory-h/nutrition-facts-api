@@ -43,7 +43,7 @@ class ProductControllerTest {
     @DisplayName("제품명으로 영양 정보 및 무기 물질 함량 정보 조회")
     @Test
     void request() throws Exception {
-        mockMvc.perform(get("/arlabel")
+        mockMvc.perform(get("/api")
                         .param("product-name", "제주 삼다수(330ml)")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8"))
@@ -60,7 +60,7 @@ class ProductControllerTest {
                 )
                 .andDo(print()); // 요청, 응답 메시지 확인
 
-        mockMvc.perform(get("/arlabel")
+        mockMvc.perform(get("/api")
                         .param("product-name", "코카콜라(335ml)")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8"))

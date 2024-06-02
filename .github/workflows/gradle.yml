@@ -5,7 +5,7 @@ on:
   push:
     branches: [ "main" ]
 
-# 워크플로우에서 사용할 환경 변수를 정의.
+# 워크플로우에서 사용할 환경 변수를 정의
 env:
   PROJECT_NAME: arlabel
   BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET }}
@@ -14,6 +14,9 @@ env:
   SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
   SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
   SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+  MYSQL_DATASOURCE_ROOT_PASSWORD: ${{ secrets.MYSQL_DATASOURCE_ROOT_PASSWORD }}
+  MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+  SERVER_PORT: ${{ secrets.SERVER_PORT }}
 
 # 'build-and-deploy' 작업을 정의: 애플리케이션의 빌드와 테스트, 배포를 수행
 jobs:
@@ -28,6 +31,14 @@ jobs:
           distribution: 'temurin' # Temurin은 AdoptOpenJDK를 대체하는 빌드
           java-version: '17' # 사용할 Java 버전을 지정
 
+      - name: Set up Docker Compose # docker-compose 설치
+        run: sudo apt-get update && sudo apt-get install docker-compose -y
+        shell: bash
+
+      - name: Run Docker Compose # docker-compose를 사용하여 컨테이너 빌드 (백그라운드 실행)
+        run: docker-compose up -d --build
+        shell: bash
+
       - name: Permission for gradlew # Gradle 래퍼 스크립트에 실행 권한을 부여
         run: chmod +x ./gradlew
         shell: bash # Bash 셸에서 실행
@@ -36,13 +47,16 @@ jobs:
         run: ./gradlew build
         shell: bash
 
+      - name: Test Project # 프로젝트의 테스트를 실행: 단위 테스트 및 기타 테스트가 수행
+        run: ./gradlew test
+        shell: bash
+
       - name: Make Zip File # 빌드 결과물을 ZIP 파일로 압축: 해당 파일은 배포에 사용
         run: zip -qq -r ./$GITHUB_SHA.zip .
         shell: bash
 
-      - name: Test Project # 프로젝트의 테스트를 실행: 단위 테스트 및 기타 테스트가 수행
-        run: ./gradlew test
-        shell: bash
+      - name: Shutdown Docker Compose # 도커 컨테이너 삭제
+        run: docker-compose down
 
       - name: Configure AWS credentials # AWS CLI를 사용하기 위해 필요한 자격 증명을 설정
         uses: aws-actions/configure-aws-credentials@v1

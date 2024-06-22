@@ -1,4 +1,4 @@
-package capstonedesign.arlabel.interceptor;
+package com.github.memoryh.nutritionfacts.api.interceptor;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,27 +12,27 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@AutoConfigureMockMvc
 @SpringBootTest
+@AutoConfigureMockMvc
 @ActiveProfiles("test")
 class LogInterceptorTest {
 
     @Autowired
     MockMvc mockMvc;
 
-    @DisplayName("경로가 /api로 시작하지 않는 경우")
     @Test
-    void pathDoesNotStartWithArlabel() throws Exception {
+    @DisplayName("잘못된 엔드포인트로 요청한 경우")
+    void invalidQueryParameterReturnsNotFound() throws Exception {
         mockMvc.perform(get("/test")
                         .characterEncoding("UTF-8"))
                 .andExpect(status().isNotFound());
     }
 
-    @DisplayName("쿼리 파라미터가 잘못된 경우")
     @Test
+    @DisplayName("쿼리 파라미터가 잘못된 경우")
     void queryParameterIsIncorrect() throws Exception {
-        mockMvc.perform(get("/api")
-                        .param("product", "제주 삼다수(330ml)")
+        mockMvc.perform(get("/api/product")
+                        .param("names", "제주 삼다수")
                         .characterEncoding("UTF-8"))
                 .andExpect(status().isNotFound());
     }

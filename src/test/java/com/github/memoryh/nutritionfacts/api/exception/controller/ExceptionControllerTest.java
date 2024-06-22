@@ -1,7 +1,7 @@
-package capstonedesign.arlabel.exception.controller;
+package com.github.memoryh.nutritionfacts.api.exception.controller;
 
-import capstonedesign.arlabel.exception.NoSuchDBException;
-import capstonedesign.arlabel.service.ProductService;
+import com.github.memoryh.nutritionfacts.api.exception.NoSuchDBException;
+import com.github.memoryh.nutritionfacts.api.service.ProductTypeCheck;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,8 +21,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Slf4j
-@AutoConfigureMockMvc
 @SpringBootTest
+@AutoConfigureMockMvc
 @ActiveProfiles("test")
 class ExceptionControllerTest {
 
@@ -30,13 +30,13 @@ class ExceptionControllerTest {
     MockMvc mockMvc;
 
     @Autowired
-    ProductService productService;
+    ProductTypeCheck productTypeCheck;
 
-    @DisplayName("데이터베이스에 저장되지 않은 제품명을 조회한 경우")
     @Test
+    @DisplayName("데이터베이스에 저장되지 않은 제품명을 조회한 경우")
     void queryForNonexistentProductNameInDatabase() throws Exception {
-        mockMvc.perform(get("/api")
-                        .param("product-name", "콜라(335m)")
+        mockMvc.perform(get("/api/product")
+                        .param("name", "테스트")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8"))
                 .andExpect(status().isOk())
@@ -47,11 +47,11 @@ class ExceptionControllerTest {
                 .andDo(print());
     }
 
-    @DisplayName("데이터베이스에 저장되지 않은 제품명을 조회한 경우 예외처리")
     @Test
+    @DisplayName("데이터베이스에 저장되지 않은 제품명을 조회한 경우 예외처리")
     void exceptionHandlingForNonexistentProductNameQuery() {
         // 데이터베이스에 저장되지 않은 제품명으로 findByProductInfo() 메서드를 호출했을 때 발생하는 예외를 캡처한다.
-        Throwable thrown = catchThrowable(() -> productService.findByProductInfo("환타(300ml)"));
+        Throwable thrown = catchThrowable(() -> productTypeCheck.checkProductType("테스트 제품"));
 
         // Assert: 캡처된 예외가 'RuntimeException' 타입인지 검증한다.
         // 'productService.findByProductInfo()' 메서드가 'RuntimeException'을 정상적으로 발생시키는지 확인한다.

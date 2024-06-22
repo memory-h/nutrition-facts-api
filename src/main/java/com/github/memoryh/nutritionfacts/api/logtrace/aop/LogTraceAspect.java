@@ -1,7 +1,7 @@
-package capstonedesign.arlabel.logtrace.aop;
+package com.github.memoryh.nutritionfacts.api.logtrace.aop;
 
-import capstonedesign.arlabel.logtrace.LogTrace;
-import capstonedesign.arlabel.logtrace.TraceStatus;
+import com.github.memoryh.nutritionfacts.api.logtrace.LogTrace;
+import com.github.memoryh.nutritionfacts.api.logtrace.TraceStatus;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -14,16 +14,16 @@ public class LogTraceAspect {
 
     private final LogTrace logTrace;
 
-    // capstonedesign.arlabel.controller 패키지 및 그 하위 패키지에 있는 모든 클래스의 모든 메서드에 적용
-    @Pointcut("execution(* capstonedesign.arlabel.controller..*.*(..))")
+    // com.github.memoryh.nutritionfacts.api.controller 패키지 및 그 하위 패키지에 있는 모든 클래스의 모든 메서드에 적용
+    @Pointcut("execution(* com.github.memoryh.nutritionfacts.api.controller..*.*(..))")
     private void controller(){}
 
-    // capstonedesign.arlabel.service 패키지 및 그 하위 패키지에 있는 모든 클래스의 모든 메서드에 적용
-    @Pointcut("execution(* capstonedesign.arlabel.service..*.*(..))")
+    // com.github.memoryh.nutritionfacts.api.service 패키지 및 그 하위 패키지에 있는 모든 클래스의 모든 메서드에 적용
+    @Pointcut("execution(* com.github.memoryh.nutritionfacts.api.service..*.*(..))")
     private void service(){}
 
-    // capstonedesign.arlabel.repository 패키지 및 그 하위 패키지에 있는 모든 클래스의 모든 메서드에 적용
-    @Pointcut("execution(* capstonedesign.arlabel.repository..*.*(..))")
+    // com.github.memoryh.nutritionfacts.api.repository 패키지 및 그 하위 패키지에 있는 모든 클래스의 모든 메서드에 적용
+    @Pointcut("execution(* com.github.memoryh.nutritionfacts.api.repository..*.*(..))")
     private void repository(){}
 
     // controller(), service(), repository() 포인트 컷 중 1개라도 만족하는 경우 Advice 실행

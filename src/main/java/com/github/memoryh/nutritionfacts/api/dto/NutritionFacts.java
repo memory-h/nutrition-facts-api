@@ -1,4 +1,4 @@
-package capstonedesign.arlabel.dto;
+package com.github.memoryh.nutritionfacts.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NutritionInfo {
+public class NutritionFacts {
 
     private String productName; // 제품 이름
 

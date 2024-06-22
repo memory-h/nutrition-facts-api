@@ -1,4 +1,4 @@
-package capstonedesign.arlabel.logtrace;
+package com.github.memoryh.nutritionfacts.api.logtrace;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

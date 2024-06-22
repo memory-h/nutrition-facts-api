@@ -1,8 +1,8 @@
-package capstonedesign.arlabel.config;
+package com.github.memoryh.nutritionfacts.api.config;
 
-import capstonedesign.arlabel.logtrace.LogTrace;
-import capstonedesign.arlabel.logtrace.ThreadLocalLogTrace;
-import capstonedesign.arlabel.logtrace.aop.LogTraceAspect;
+import com.github.memoryh.nutritionfacts.api.logtrace.LogTrace;
+import com.github.memoryh.nutritionfacts.api.logtrace.ThreadLocalLogTrace;
+import com.github.memoryh.nutritionfacts.api.logtrace.aop.LogTraceAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

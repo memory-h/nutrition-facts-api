@@ -1,4 +1,4 @@
-package capstonedesign.arlabel.exception;
+package com.github.memoryh.nutritionfacts.api.exception;
 
 public class NoSuchDBException extends RuntimeException{
 

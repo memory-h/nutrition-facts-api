@@ -1,4 +1,4 @@
-package capstonedesign.arlabel.logtrace;
+package com.github.memoryh.nutritionfacts.api.logtrace;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,12 +15,12 @@ public class ThreadLocalLogTrace implements LogTrace {
 
     // 클라이언트의 요청 정보(URL, IP, User-Agent)를 포함하는 로그를 출력하는 메서드
     @Override
-    public void requestInfo(String requestUrl, String ipAddress, String userAgent) {
+    public void requestInfo(String requestMethod, String requestUrl, String ipAddress, String userAgent) {
         syncTraceId(); // 현재 스레드에 대한 TraceId를 업데이트하거나 초기화한다.
 
         TraceId traceId = traceIdHolder.get();
 
-        log.info("[{}] [URL]: {}, [User IP]: {}, [User-Agent]: {}", traceId.getId(), requestUrl, ipAddress, userAgent);
+        log.info("[{}] [Method]: {}, [URL]: {}, [User IP]: {}, [User-Agent]: {}", traceId.getId(), requestMethod, requestUrl, ipAddress, userAgent);
     }
 
     // 시작 로그를 출력하는 메서드

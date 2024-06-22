@@ -1,6 +1,6 @@
-package capstonedesign.arlabel.repository;
+package com.github.memoryh.nutritionfacts.api.repository;
 
-import capstonedesign.arlabel.exception.NoSuchDBException;
+import com.github.memoryh.nutritionfacts.api.exception.NoSuchDBException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -24,7 +24,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
         try {
             // SQL 쿼리 실행: 제품명을 사용하여 is_water 값을 조회하고 Boolean으로 반환
-            // queryForObject(): 단건을 조회할 때 사용하는 메서드 (쿼리문 실행 결과로 1개만 나오는 경우)
+            // queryForObject(): 단일 조회할 때 사용하는 메서드 (쿼리문 실행 결과로 1개만 나오는 경우)
             return Boolean.TRUE.equals(template.queryForObject(sql, isWaterRowMapper(), productName));
         } catch (EmptyResultDataAccessException e) {
             // 조회 결과가 없을 경우 NoSuchDBException 예외 발생

@@ -1,4 +1,4 @@
-package capstonedesign.arlabel.repository;
+package com.github.memoryh.nutritionfacts.api.repository;
 
 public interface ProductRepository {
 
